@@ -97,7 +97,7 @@ class MainPanel extends JPanel {
 
 		JLabel emptyLabelToFillSpace = new JLabel();
 		add(emptyLabelToFillSpace,
-				createGDConstrains(1, 2, 1, 1, GridBagConstraints.BOTH,
+				createGDConstrains(0, 2, 1, 1, GridBagConstraints.BOTH,
 						GridBagConstraints.WEST));
 	}
 
