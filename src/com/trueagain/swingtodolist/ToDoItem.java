@@ -1,6 +1,8 @@
 package com.trueagain.swingtodolist;
 
-public class ToDoItem {
+import java.io.Serializable;
+
+public class ToDoItem implements Serializable{
 	private String name;
 	
 	public ToDoItem(String _name){
