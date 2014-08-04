@@ -25,14 +25,15 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
 class MainPanel extends JPanel {
-	private final String saveFile = "todolist.ser";
+	private final Persistence persistence;
 	private final JTextField inputTextField = new JTextField();
-	private final DefaultListModel<ToDoItem> listModel = loadListFromFile();
-	private final JList<ToDoItem> list = new JList<ToDoItem>(listModel);
+	private final JList<ToDoItem> list;
 	private final JPopupMenu popup = new JPopupMenu();
 	
 
-	public MainPanel() {
+	public MainPanel(Persistence _persistence) {
+		this.persistence = _persistence;
+		this.list = new JList<ToDoItem>(persistence.getListModel());
 		setLayout(new GridBagLayout());
 
 		inputTextField.setColumns(12);
@@ -48,8 +49,7 @@ class MainPanel extends JPanel {
 		addButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				listModel.addElement(new ToDoItem(inputTextField.getText()));
-				saveListModelToFile();
+				persistence.addElementToListModel(new ToDoItem(inputTextField.getText()));
 				inputTextField.setText("");
 			}
 		});
@@ -59,8 +59,7 @@ class MainPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				listModel.remove(list.getSelectedIndex());
-				saveListModelToFile();
+				persistence.removeElementFromListModel(list.getSelectedIndex());
 			}
 
 		});
@@ -114,38 +113,5 @@ class MainPanel extends JPanel {
 		return constraints;
 	}
 
-	private void saveListModelToFile(){
-		saveListModelToFile(saveFile);
-	}
 	
-	private void saveListModelToFile(String fileName){
-		try{
-			FileOutputStream fileOut = new FileOutputStream(fileName);
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(listModel);
-			out.close();
-			fileOut.close();
-		} catch (Exception e){
-			throw new RuntimeException("Can't save todo list to file", e);
-		}
-	}
-	
-	private DefaultListModel<ToDoItem> loadListFromFile(){
-		return loadListFromFile(saveFile);
-	}
-	
-	private DefaultListModel<ToDoItem> loadListFromFile(String fileName){
-		DefaultListModel<ToDoItem> result = new DefaultListModel<ToDoItem>();
-		FileInputStream fileIn;
-		try {
-			fileIn = new FileInputStream(fileName);
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			result = (DefaultListModel<ToDoItem>) in.readObject();
-	        in.close();
-	        fileIn.close();
-		} catch (Exception e) {
-			throw new RuntimeException("Can't load todo list from file", e);
-		}
-        return result;
-	}
 }

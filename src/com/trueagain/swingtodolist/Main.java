@@ -5,9 +5,21 @@ import javax.swing.JFrame;
 public class Main extends JFrame{
 	public Main() {
 		setTitle("Todo");
-		MainPanel mainPanel = new MainPanel();
+		final Persistence persistence = Persistence.load();
+		MainPanel mainPanel = new MainPanel(persistence);
 		getContentPane().add(mainPanel);
-		setSize(WIDTH, HEIGHT);
+		setSize(persistence.getWindowWidth(), persistence.getWindowHeight());
+		setLocation(persistence.getWindowPosition());
+		Runtime.getRuntime().addShutdownHook(new Thread()
+		{
+		    @Override
+		    public void run()
+		    {
+		    	persistence.setWindowWidth(Main.this.getWidth());
+		    	persistence.setWindowHeight(Main.this.getHeight());
+		    	persistence.setWindowPosition(Main.this.getLocation());
+		    }
+		});
 	}
 	
 	public static void main(String[] args) {
@@ -15,8 +27,5 @@ public class Main extends JFrame{
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setVisible(true);
 	}
-
-	public static final int WIDTH = 250;
-	public static final int HEIGHT = 400;
 }
 
