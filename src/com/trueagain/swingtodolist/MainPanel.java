@@ -54,8 +54,8 @@ class MainPanel extends JPanel {
 			}
 		});
 
-		JMenuItem item = new JMenuItem("remove");
-		item.addActionListener(new ActionListener() {
+		JMenuItem removeMenuItem = new JMenuItem("remove");
+		removeMenuItem.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -63,7 +63,32 @@ class MainPanel extends JPanel {
 			}
 
 		});
-		popup.add(item);
+		popup.add(removeMenuItem);
+		
+		JMenuItem markAsDoneMenuItem = new JMenuItem("mark as done");
+		markAsDoneMenuItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				persistence.markAsDone(list.getSelectedIndex());
+				list.revalidate();
+			}
+
+		});
+		popup.add(markAsDoneMenuItem);
+		
+		JMenuItem markAsNotDoneYet = new JMenuItem("mark as not done");
+		markAsNotDoneYet.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				persistence.markAsNotDoneYet(list.getSelectedIndex());
+				list.revalidate();
+			}
+
+		});
+		popup.add(markAsNotDoneYet);
+		
 		list.addMouseListener(new MouseListener() {
 
 			@Override

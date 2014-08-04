@@ -15,6 +15,16 @@ public class Persistence implements Serializable{
 	private int windowHeight = 400;
 	private DefaultListModel<ToDoItem> listModel = new DefaultListModel<ToDoItem>();
 	
+	public void markAsDone(int index){
+		listModel.getElementAt(index).markAsDone();
+		save();
+	}
+	
+	public void markAsNotDoneYet(int index){
+		listModel.getElementAt(index).markAsNotDoneYet();
+		save();
+	}
+	
 	public Point getWindowPosition() {
 		return windowPosition;
 	}

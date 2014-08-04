@@ -4,6 +4,15 @@ import java.io.Serializable;
 
 public class ToDoItem implements Serializable{
 	private String name;
+	private boolean isDone = false;
+	
+	public void markAsDone(){
+		this.isDone = true;
+	}
+	
+	public void markAsNotDoneYet(){
+		this.isDone = false;
+	}
 	
 	public ToDoItem(String _name){
 		this.name = _name;
@@ -11,6 +20,16 @@ public class ToDoItem implements Serializable{
 	
 	@Override
 	public String toString(){
-		return this.name;
+		StringBuilder sb = new StringBuilder();
+		sb.append("<html>");
+		if(isDone){
+			sb.append("<strike>");
+		}
+		sb.append(this.name);
+		if(isDone){
+			sb.append("</strike>");
+		}
+		sb.append("</html>");
+		return sb.toString();
 	}
 }
