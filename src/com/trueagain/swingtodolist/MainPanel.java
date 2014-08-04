@@ -71,7 +71,8 @@ class MainPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				persistence.markAsDone(list.getSelectedIndex());
-				list.revalidate();
+				list.validate();
+				list.repaint();
 			}
 
 		});
@@ -83,7 +84,8 @@ class MainPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				persistence.markAsNotDoneYet(list.getSelectedIndex());
-				list.revalidate();
+				list.validate();
+				list.repaint();
 			}
 
 		});
