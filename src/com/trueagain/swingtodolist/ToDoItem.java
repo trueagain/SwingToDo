@@ -14,8 +14,16 @@ public class ToDoItem implements Serializable{
 		this.isDone = false;
 	}
 	
+	public void setName(String newName){
+		this.name = newName;
+	}
+	
 	public ToDoItem(String _name){
 		this.name = _name;
+	}
+	
+	public String toClearString(){
+		return this.name;
 	}
 	
 	@Override

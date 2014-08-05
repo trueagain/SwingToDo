@@ -15,6 +15,8 @@ public class Persistence implements Serializable{
 	private int windowHeight = 400;
 	private DefaultListModel<ToDoItem> listModel = new DefaultListModel<ToDoItem>();
 	
+	private static final String saveFile = "todolist.ser";
+	
 	public void markAsDone(int index){
 		listModel.getElementAt(index).markAsDone();
 		save();
@@ -60,11 +62,14 @@ public class Persistence implements Serializable{
 		this.listModel = listModel;
 		this.save();
 	}
-
-	private static final String saveFile = "todolist.ser";
 	
 	public void addElementToListModel(ToDoItem item){
 		listModel.addElement(item);
+		save();
+	}
+	
+	public void updateListModelElementName(int index, String newName){
+		listModel.getElementAt(index).setName(newName);
 		save();
 	}
 	
